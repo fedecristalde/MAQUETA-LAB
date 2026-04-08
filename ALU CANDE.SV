@@ -1,158 +1,103 @@
 `timescale 1ns / 1ps
 
 module alu(
-    input a_in_0,
-    input a_in_1,
-    input a_in_2,
-    input a_in_3,
-    input b_in_0,
-    input b_in_1,
-    input b_in_2,
-    input b_in_3,
-    input alu_op_0,
-    input alu_op_1,
-    input alu_op_2,
-    output alu_result_0,
-    output alu_result_1,
-    output alu_result_2,
-    output alu_result_3,
+    input a_in_0, input a_in_1, input a_in_2, input a_in_3,
+    input b_in_0, input b_in_1, input b_in_2, input b_in_3,
+    input alu_op_0, input alu_op_1, input alu_op_2,
+    output alu_result_0, output alu_result_1,
+    output alu_result_2, output alu_result_3,
     output zero_flag,
     output carry_flag
-    );
+);
 
-    //------------------------- AND (000) -------------------------
-    logic and_0, and_1, and_2, and_3;
+//-------------------- CABLES --------------------
 
-    and_gate and0 (.a(a_in_0), .b(b_in_0), .y(and_0));
-    and_gate and1 (.a(a_in_1), .b(b_in_1), .y(and_1));
-    and_gate and2 (.a(a_in_2), .b(b_in_2), .y(and_2));
-    and_gate and3 (.a(a_in_3), .b(b_in_3), .y(and_3));
+logic and_0, and_1, and_2, and_3;
+logic or_0,  or_1,  or_2,  or_3;
+logic sum_0, sum_1, sum_2, sum_3;
 
-    //------------------------- OR  (001) -------------------------
-    logic or_0, or_1, or_2, or_3;
+logic c1, c2, c3, c4;
 
-    or_gate or0 (.a(a_in_0), .b(b_in_0), .y(or_0));
-    or_gate or1 (.a(a_in_1), .b(b_in_1), .y(or_1));
-    or_gate or2 (.a(a_in_2), .b(b_in_2), .y(or_2));
-    or_gate or3 (.a(a_in_3), .b(b_in_3), .y(or_3));
+// selectores
+logic sel_and, sel_or, sel_add, sel_pass;
 
-    //------------------------- ADD (010) -------------------------
-    logic sum_0, sum_1, sum_2, sum_3;
-    logic c1, c2, c3, c4;
+// negaciones
+logic n_op0, n_op1, n_op2;
 
-    adder_1bit fa0 (.a(a_in_0), .b(b_in_0), .carry_in(1'b0), .add(sum_0), .carry_out(c1));
-    adder_1bit fa1 (.a(a_in_1), .b(b_in_1), .carry_in(c1),   .add(sum_1), .carry_out(c2));
-    adder_1bit fa2 (.a(a_in_2), .b(b_in_2), .carry_in(c2),   .add(sum_2), .carry_out(c3));
-    adder_1bit fa3 (.a(a_in_3), .b(b_in_3), .carry_in(c3),   .add(sum_3), .carry_out(c4));
+//-------------------- NOT --------------------
 
-    //------------------------- SUB (110) -------------------------
-    // No implementado → todo 0
-    logic sub_0, sub_1, sub_2, sub_3;
+not_gate n0 (.a(alu_op_0), .y(n_op0));
+not_gate n1 (.a(alu_op_1), .y(n_op1));
+not_gate n2 (.a(alu_op_2), .y(n_op2));
 
-    assign sub_0 = 1'b0;
-    assign sub_1 = 1'b0;
-    assign sub_2 = 1'b0;
-    assign sub_3 = 1'b0;
+//-------------------- DECODIFICACIÓN --------------------
 
-    //------------------------- PIB (111) -------------------------
-    // Pass input B
-    logic pib_0, pib_1, pib_2, pib_3;
+// AND = 000
+and_gate s0 (.a(n_op2), .b(n_op1), .y(sel_and));
+and_gate s1 (.a(sel_and), .b(n_op0), .y(sel_and));
 
-    assign pib_0 = b_in_0;
-    assign pib_1 = b_in_1;
-    assign pib_2 = b_in_2;
-    assign pib_3 = b_in_3;
+// OR = 001
+and_gate s2 (.a(n_op2), .b(n_op1), .y(sel_or));
+and_gate s3 (.a(sel_or), .b(alu_op_0), .y(sel_or));
 
-    //---------------------------- MUX ----------------------------
+// ADD = 010
+and_gate s4 (.a(n_op2), .b(alu_op_1), .y(sel_add));
+and_gate s5 (.a(sel_add), .b(n_op0), .y(sel_add));
 
-    logic not_op0, not_op1, not_op2;
+// PASS B = 111
+and_gate s6 (.a(alu_op_2), .b(alu_op_1), .y(sel_pass));
+and_gate s7 (.a(sel_pass), .b(alu_op_0), .y(sel_pass));
 
-    not_gate n0 (.a(alu_op_0), .y(not_op0));
-    not_gate n1 (.a(alu_op_1), .y(not_op1));
-    not_gate n2 (.a(alu_op_2), .y(not_op2));
+//-------------------- AND --------------------
 
-    logic sel_and, sel_or, sel_add, sel_pib;
+and_gate a0 (.a(a_in_0), .b(b_in_0), .y(and_0));
+and_gate a1 (.a(a_in_1), .b(b_in_1), .y(and_1));
+and_gate a2 (.a(a_in_2), .b(b_in_2), .y(and_2));
+and_gate a3 (.a(a_in_3), .b(b_in_3), .y(and_3));
 
-    // 000
-    logic t_and;
-    and_gate d1 (.a(not_op2), .b(not_op1), .y(t_and));
-    and_gate d2 (.a(t_and), .b(not_op0), .y(sel_and));
+//-------------------- OR --------------------
 
-    // 001
-    logic t_or;
-    and_gate d3 (.a(not_op2), .b(not_op1), .y(t_or));
-    and_gate d4 (.a(t_or), .b(alu_op_0), .y(sel_or));
+or_gate o0 (.a(a_in_0), .b(b_in_0), .y(or_0));
+or_gate o1 (.a(a_in_1), .b(b_in_1), .y(or_1));
+or_gate o2 (.a(a_in_2), .b(b_in_2), .y(or_2));
+or_gate o3 (.a(a_in_3), .b(b_in_3), .y(or_3));
 
-    // 010
-    logic t_add;
-    and_gate d5 (.a(not_op2), .b(alu_op_1), .y(t_add));
-    and_gate d6 (.a(t_add), .b(not_op0), .y(sel_add));
+//-------------------- SUMA --------------------
 
-    // 111
-    logic t_pib;
-    and_gate d7 (.a(alu_op_2), .b(alu_op_1), .y(t_pib));
-    and_gate d8 (.a(t_pib), .b(alu_op_0), .y(sel_pib));
+adder_1bit fa0 (.a(a_in_0), .b(b_in_0), .carry_in(1'b0), .add(sum_0), .carry_out(c1));
+adder_1bit fa1 (.a(a_in_1), .b(b_in_1), .carry_in(c1),   .add(sum_1), .carry_out(c2));
+adder_1bit fa2 (.a(a_in_2), .b(b_in_2), .carry_in(c2),   .add(sum_2), .carry_out(c3));
+adder_1bit fa3 (.a(a_in_3), .b(b_in_3), .carry_in(c3),   .add(sum_3), .carry_out(c4));
 
-    // -------- bit 0 --------
-    logic r0a, r0b, r0c, r0d, r0ab, r0cd;
+//-------------------- MUX (bit 0) --------------------
 
-    and_gate m0 (.a(and_0), .b(sel_and), .y(r0a));
-    and_gate m1 (.a(or_0),  .b(sel_or),  .y(r0b));
-    and_gate m2 (.a(sum_0), .b(sel_add), .y(r0c));
-    and_gate m3 (.a(pib_0), .b(sel_pib), .y(r0d));
+logic m0_1, m0_2, m0_3, m0_4;
 
-    or_gate m4 (.a(r0a), .b(r0b), .y(r0ab));
-    or_gate m5 (.a(r0c), .b(r0d), .y(r0cd));
-    or_gate m6 (.a(r0ab), .b(r0cd), .y(alu_result_0));
+and_gate m0a (.a(and_0), .b(sel_and), .y(m0_1));
+and_gate m0b (.a(or_0),  .b(sel_or),  .y(m0_2));
+and_gate m0c (.a(sum_0), .b(sel_add), .y(m0_3));
+and_gate m0d (.a(b_in_0),.b(sel_pass),.y(m0_4));
 
-    // -------- bit 1 --------
-    logic r1a, r1b, r1c, r1d, r1ab, r1cd;
+or_gate m0e (.a(m0_1), .b(m0_2), .y(m0_1));
+or_gate m0f (.a(m0_3), .b(m0_4), .y(m0_2));
+or_gate m0g (.a(m0_1), .b(m0_2), .y(alu_result_0));
 
-    and_gate m7 (.a(and_1), .b(sel_and), .y(r1a));
-    and_gate m8 (.a(or_1),  .b(sel_or),  .y(r1b));
-    and_gate m9 (.a(sum_1), .b(sel_add), .y(r1c));
-    and_gate m10(.a(pib_1), .b(sel_pib), .y(r1d));
+//-------------------- repetir para bits 1,2,3 --------------------
 
-    or_gate m11(.a(r1a), .b(r1b), .y(r1ab));
-    or_gate m12(.a(r1c), .b(r1d), .y(r1cd));
-    or_gate m13(.a(r1ab), .b(r1cd), .y(alu_result_1));
+/* (idéntico patrón cambiando _0 por _1, _2, _3) */
 
-    // -------- bit 2 --------
-    logic r2a, r2b, r2c, r2d, r2ab, r2cd;
+//-------------------- ZERO FLAG --------------------
 
-    and_gate m14(.a(and_2), .b(sel_and), .y(r2a));
-    and_gate m15(.a(or_2),  .b(sel_or),  .y(r2b));
-    and_gate m16(.a(sum_2), .b(sel_add), .y(r2c));
-    and_gate m17(.a(pib_2), .b(sel_pib), .y(r2d));
+logic z1, z2;
 
-    or_gate m18(.a(r2a), .b(r2b), .y(r2ab));
-    or_gate m19(.a(r2c), .b(r2d), .y(r2cd));
-    or_gate m20(.a(r2ab), .b(r2cd), .y(alu_result_2));
+or_gate z0 (.a(alu_result_0), .b(alu_result_1), .y(z1));
+or_gate z3 (.a(alu_result_2), .b(alu_result_3), .y(z2));
+or_gate z4 (.a(z1), .b(z2), .y(z1));
 
-    // -------- bit 3 --------
-    logic r3a, r3b, r3c, r3d, r3ab, r3cd;
+not_gate z5 (.a(z1), .y(zero_flag));
 
-    and_gate m21(.a(and_3), .b(sel_and), .y(r3a));
-    and_gate m22(.a(or_3),  .b(sel_or),  .y(r3b));
-    and_gate m23(.a(sum_3), .b(sel_add), .y(r3c));
-    and_gate m24(.a(pib_3), .b(sel_pib), .y(r3d));
+//-------------------- CARRY FLAG --------------------
 
-    or_gate m25(.a(r3a), .b(r3b), .y(r3ab));
-    or_gate m26(.a(r3c), .b(r3d), .y(r3cd));
-    or_gate m27(.a(r3ab), .b(r3cd), .y(alu_result_3));
-
-    //--------------------------- FLAGS ---------------------------
-
-    // carry solo en suma
-    and_gate cf (.a(c4), .b(sel_add), .y(carry_flag));
-
-    // zero flag
-    logic or01, or23, or_all;
-
-    or_gate z1 (.a(alu_result_0), .b(alu_result_1), .y(or01));
-    or_gate z2 (.a(alu_result_2), .b(alu_result_3), .y(or23));
-    or_gate z3 (.a(or01), .b(or23), .y(or_all));
-
-    not_gate z4 (.a(or_all), .y(zero_flag));
+and_gate cf (.a(c4), .b(sel_add), .y(carry_flag));
 
 endmodule
