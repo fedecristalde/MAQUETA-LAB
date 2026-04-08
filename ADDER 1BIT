@@ -11,11 +11,13 @@ module adder_1bit(
     wire c1,c2,c3;
 
     XOR(s1, a,b);
-    XOR(add,s1,carry_in);
-
     and(c1,a,b);
+    
+    XOR(add,s1,carry_in);
     and(c2,a,carry_in);
+
     and(c3,b,carry_in);
+
     or(carry_out,c1,c2,c3);
     );
     
