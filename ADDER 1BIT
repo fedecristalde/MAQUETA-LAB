@@ -8,7 +8,7 @@ module adder_1bit(
     output carry_out,
 
     wire s1;
-    wire c1,c2,c3;
+    wire c1,c2;
 
     XOR(s1, a,b);
     and(c1,a,b);
@@ -16,9 +16,7 @@ module adder_1bit(
     XOR(add,s1,carry_in);
     and(c2,a,carry_in);
 
-    and(c3,b,carry_in);
-
-    or(carry_out,c1,c2,c3);
+    or(carry_out,c1,c2);
     );
     
          
