@@ -17,6 +17,7 @@ module adder_1bit(
     and(c2,s1,carry_in);
 
     or(carry_out,c1,c2);
+    
     );
     
          
