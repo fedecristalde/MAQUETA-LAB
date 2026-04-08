@@ -6,6 +6,7 @@ module adder_1bit(
     input carry_in,
     output add,
     output carry_out,
+     );
 
     wire s1;
     wire c1,c2;
@@ -18,7 +19,7 @@ module adder_1bit(
 
     or(carry_out,c1,c2);
     
-    );
+   
     
          
 endmodule
