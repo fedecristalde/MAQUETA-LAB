@@ -66,8 +66,8 @@ adder_1bit bit3 (
     
     //------------------------- SUB (110) -------------------------
     
-logic c0, c1, c2; 
-logic sum0, sum1, sum2, sum3; 
+logic c00, c01, c02; 
+logic sum00, sum01, sum02, sum03; 
 logic nb0, nb1, nb2, nb3; 
 
 not_gate u_not0 (.a(b_in_0), .y(nb0));
@@ -79,31 +79,31 @@ adder_1bit bit0 (
     .a(a_in_0), 
     .b(nb0), 
     .carry_in(1'b1), //acarreo inicial es 1 (el bit que debo sumar para el c2)
-    .add(sum0), 
-    .carry_out(c0)
+    .add(sum00), 
+    .carry_out(c00)
 );
 
 adder_1bit bit1 (
     .a(a_in_1), 
     .b(nb1), 
-    .carry_in(c0),
-    .add(sum1), 
-    .carry_out(c1)
+    .carry_in(c00),
+    .add(sum01), 
+    .carry_out(c01)
 );
 
 adder_1bit bit2 (
     .a(a_in_2), 
     .b(nb2), 
-    .carry_in(c1),
-    .add(sum2), 
-    .carry_out(c2)
+    .carry_in(c01),
+    .add(sum02), 
+    .carry_out(c02)
 );
 
 adder_1bit bit3 (
     .a(a_in_3), 
     .b(nb3), 
-    .carry_in(c2),
-    .add(sum3), 
+    .carry_in(c02),
+    .add(sum03), 
     .carry_out(carry_flag)
 );
 
