@@ -33,7 +33,7 @@ module adder_1bit_0(
     input a_in_0,
     input b_in_0,
     input carry_in_0,
-    output s0,
+    output s1,
     output carry_out_0
     );
 
