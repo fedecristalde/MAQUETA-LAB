@@ -15,12 +15,7 @@ module flags (
     assign zero_flag = ~(result[0] | result[1] | result[2] | result[3]);
 
     // CARRY FLAG depende de la operación
-    always_comb begin
-        case (alu_op)
-            3'b010: carry_flag = carry_add; // ADD
-            3'b110: carry_flag = carry_sub; // SUB
-            default: carry_flag = 1'b0;
-        endcase
-    end
-
+   assign carry_flag = (alu_op == 3'b010) ? carry_add :   // ADD
+                        (alu_op == 3'b110) ? carry_sub :   // SUB
+                                             1'b0;
 endmodule
