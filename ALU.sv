@@ -29,7 +29,7 @@ module alu(
     //------------------------- OR  (001) -------------------------
     
     //------------------------- ADD (010) -------------------------
-    logic c0, c1, c2; //
+    logic c0, c1, c2; 
     logic sum0, sum1, sum2, sum3; 
 
 adder_1bit bit0 (
@@ -67,9 +67,9 @@ adder_1bit bit3 (
     
     //------------------------- SUB (110) -------------------------
     
-logic c00, c01, c02; 
-logic sum00, sum01, sum02, sum03; 
-logic nb0, nb1, nb2, nb3; 
+    logic c00, c01, c02; 
+    logic sum00, sum01, sum02, sum03; 
+    logic nb0, nb1, nb2, nb3; 
 
 not_gate u_not0 (.a(b_in_0), .y(nb0));
 not_gate u_not1 (.a(b_in_1), .y(nb1));
