@@ -29,12 +29,15 @@ module alu(
     and_gate y1 (.a(a_in_1), .b(b_in_1), .y(ca1));
     and_gate y2 (.a(a_in_2), .b(b_in_2), .y(ca2));
     and_gate y3 (.a(a_in_3), .b(b_in_3), .y(ca3));
-        
 
-    
-    
     //------------------------- OR  (001) -------------------------
+     logic co0, co1, co2, co3;
     
+    or_gate o0 (.a(a_in_0), .b(b_in_0), .y(co0));
+    or_gate o1 (.a(a_in_1), .b(b_in_1), .y(co1));
+    or_gate o2 (.a(a_in_2), .b(b_in_2), .y(co2));
+    or_gate o3 (.a(a_in_3), .b(b_in_3), .y(co3));
+        
     //------------------------- ADD (010) -------------------------
     logic c0, c1, c2; 
     logic sum0, sum1, sum2, sum3; 
