@@ -195,10 +195,20 @@ module alu(
         .sel_0(alu_op_0), 
         .sel_1(alu_op_1), 
         .sel_2(alu_op_2),
-        .y(FALTAA) 
+        .y(carry_flag) 
     );
     
     //--------------------------- FLAGS ---------------------------
+    or_gate cerogate0 (.a(alu_result_0), .b(alu_result_1), .y(cero0));
+    or_gate cerogate1 (.a(alu_result_2), .b(alu_result_3), .y(cero1));
+    or_gate cerogate2 (.a(cero0), .b(cero1), .y(cero3));
+
+    not_gate negacion (.a(cero3), .y(zero_flag)); 
+    
+  
+
+    
+    
     
     
 endmodule
