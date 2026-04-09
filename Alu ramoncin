@@ -68,7 +68,39 @@ adder_1bit bit3 (
 
    
     //------------------------- SUB (110) -------------------------
-    
+
+`timescale 1ns / 1ps
+
+// Cables para inversión (Complemento a 1)
+logic nb0, nb1, nb2, nb3; 
+
+// Cables para B en Complemento a 2 (-B)
+logic comp_b0, comp_b1, comp_b2, comp_b3;
+logic c_c0, c_c1, c_c2, c_c3;
+
+// Cables para el resultado final de la resta (A - B)
+logic res_sub0, res_sub1, res_sub2, res_sub3;
+logic c_s0, c_s1, c_s2, c_s3;
+
+// Invierto bits de B (NOT)
+not_gate u_not0 (.a(b_in_0), .y(nb0));
+not_gate u_not1 (.a(b_in_1), .y(nb1));
+not_gate u_not2 (.a(b_in_2), .y(nb2));
+not_gate u_not3 (.a(b_in_3), .y(nb3));
+
+// Obtener el B negado (sumar 1 bit al valor invertido)
+// Se suma nb + 0001
+adder_1bit u_comp0 (.a(nb0), .b(1'b1), .carry_in(1'b0), .add(comp_b0), .carry_out(c_c0));
+adder_1bit u_comp1 (.a(nb1), .b(1'b0), .carry_in(c_c0), .add(comp_b1), .carry_out(c_c1));
+adder_1bit u_comp2 (.a(nb2), .b(1'b0), .carry_in(c_c1), .add(comp_b2), .carry_out(c_c2));
+adder_1bit u_comp3 (.a(nb3), .b(1'b0), .carry_in(c_c2), .add(comp_b3), .carry_out(c_c3));
+
+//Realizar A + (-B)
+adder_1bit u_sub0 (.a(a_in_0), .b(comp_b0), .carry_in(1'b0), .add(res_sub0), .carry_out(c_s0));
+adder_1bit u_sub1 (.a(a_in_1), .b(comp_b1), .carry_in(c_s0), .add(res_sub1), .carry_out(c_s1));
+adder_1bit u_sub2 (.a(a_in_2), .b(comp_b2), .carry_in(c_s1), .add(res_sub2), .carry_out(c_s2));
+adder_1bit u_sub3 (.a(a_in_3), .b(comp_b3), .carry_in(c_s2), .add(res_sub3), .carry_out(c_s3));
+
     //------------------------- PIB (111) -------------------------
     
     //---------------------------- MUX ----------------------------
