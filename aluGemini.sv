@@ -1,10 +1,21 @@
 `timescale 1ns / 1ps
 
 module alu(
-    input a_in_0, input a_in_1, input a_in_2, input a_in_3,
-    input b_in_0, input b_in_1, input b_in_2, input b_in_3,
-    input alu_op_0, input alu_op_1, input alu_op_2,
-    output alu_result_0, output alu_result_1, output alu_result_2, output alu_result_3,
+    input a_in_0,
+    input a_in_1,
+    input a_in_2,
+    input a_in_3,
+    input b_in_0,
+    input b_in_1,
+    input b_in_2,
+    input b_in_3,
+    input alu_op_0,
+    input alu_op_1,
+    input alu_op_2,
+    output alu_result_0,
+    output alu_result_1,
+    output alu_result_2,
+    output alu_result_3,
     output zero_flag,
     output carry_flag
     );
