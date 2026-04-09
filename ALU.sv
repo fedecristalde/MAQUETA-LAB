@@ -48,6 +48,7 @@ module adder_1bit(
     and(c2,s1,carry_in);
 
     or(carry_out,c1,c2);
+    endmodule
 
 module adder_4bit(
     input  a0, a1, a2, a3,
@@ -88,10 +89,6 @@ module adder_4bit(
         .carry_out(carry_out)  
         );
 
-endmodule
-   
-    
-         
 endmodule
     
     //------------------------- SUB (110) -------------------------
