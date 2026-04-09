@@ -60,7 +60,7 @@ adder_1bit bit3 (
     .b(b_in_3), 
     .carry_in(c2),
     .add(sum3), 
-    .carry_out(carry_flag)
+    .carry_out(carry_flag_add)
 );
 
     
@@ -104,7 +104,7 @@ adder_1bit bit03 (
     .b(nb3), 
     .carry_in(c02),
     .add(sum03), 
-    .carry_out(carry_flag)
+    .carry_out(carry_flag_sub)
 );
 
     
