@@ -149,7 +149,7 @@ module alu(
         .sel_2(alu_op_2),
         .y(alu_result_1)  // Salida final del bit 0);
 
-     mux8_1 alu_mux_2 (
+    mux8_1 alu_mux_2 (
         .d0(ca2),    // Resultado AND bit 0
         .d1(co2),     // Resultado OR bit 0
         .d2(sum2),        // Resultado Suma bit 0
@@ -163,7 +163,7 @@ module alu(
         .sel_2(alu_op_2),
         .y(alu_result_2)  // Salida final del bit 0);
     
-         mux8_1 alu_mux_3 (
+    mux8_1 alu_mux_3 (
         .d0(ca3),    // Resultado AND bit 0
         .d1(co3),     // Resultado OR bit 0
         .d2(sum3),        // Resultado Suma bit 0
