@@ -75,7 +75,7 @@ not_gate u_not1 (.a(b_in_1), .y(nb1));
 not_gate u_not2 (.a(b_in_2), .y(nb2));
 not_gate u_not3 (.a(b_in_3), .y(nb3));
     
-adder_1bit bit0 (
+adder_1bit bit00 (
     .a(a_in_0), 
     .b(nb0), 
     .carry_in(1'b1), //acarreo inicial es 1 (el bit que debo sumar para el c2)
@@ -83,7 +83,7 @@ adder_1bit bit0 (
     .carry_out(c00)
 );
 
-adder_1bit bit1 (
+adder_1bit bit01 (
     .a(a_in_1), 
     .b(nb1), 
     .carry_in(c00),
@@ -91,7 +91,7 @@ adder_1bit bit1 (
     .carry_out(c01)
 );
 
-adder_1bit bit2 (
+adder_1bit bit02 (
     .a(a_in_2), 
     .b(nb2), 
     .carry_in(c01),
@@ -99,7 +99,7 @@ adder_1bit bit2 (
     .carry_out(c02)
 );
 
-adder_1bit bit3 (
+adder_1bit bit03 (
     .a(a_in_3), 
     .b(nb3), 
     .carry_in(c02),
