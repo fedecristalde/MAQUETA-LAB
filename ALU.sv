@@ -121,6 +121,7 @@ module alu(
     //------------------------- PIB (111) -------------------------
     // Logramos resolver este apartado desde el multiplexor con una asignacion directa.
     //---------------------------- MUX ----------------------------
+    
     mux8_1 alu_mux_0 (
         .d0(ca0),    // Resultado AND bit 0
         .d1(co0),     // Resultado OR bit 0
@@ -181,6 +182,22 @@ module alu(
         .sel_2(alu_op_2),
         .y(alu_result_3) 
     );
+
+     mux8_1 alu_mux_4 (
+        .d0(1'b0), 
+        .d1(1'b0),    
+        .d2(carry_flag_add),    
+        .d3(1'b0),      
+        .d4(1'b0),       
+        .d5(1'b0),        
+        .d6(carry_flag_sub),       
+        .d7(1'b0),      
+        .sel_0(alu_op_0), 
+        .sel_1(alu_op_1), 
+        .sel_2(alu_op_2),
+        .y(FALTAA) 
+    );
+    
     //--------------------------- FLAGS ---------------------------
     
     
