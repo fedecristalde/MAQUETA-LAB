@@ -27,7 +27,6 @@ module alu(
     //------------------------- OR  (001) -------------------------
     
     //------------------------- ADD (010) -------------------------
-`timescale 1ns / 1ps
 
 logic c0, c1, c2; // Acarreos intermedios
 logic sum0, sum1, sum2, sum3; // Resultados temporales de la suma
@@ -64,12 +63,10 @@ adder_1bit bit3 (
     .carry_out(carry_flag)
 );
 
-
-
+    //------------------------- SUB (110) ------------------------- 
    
-    //------------------------- SUB (110) -------------------------
+    
 
-`timescale 1ns / 1ps
 
 // Cables para inversión (Complemento a 1)
 logic nb0, nb1, nb2, nb3; 
@@ -100,71 +97,11 @@ adder_1bit u_sub0 (.a(a_in_0), .b(comp_b0), .carry_in(1'b0), .add(res_sub0), .ca
 adder_1bit u_sub1 (.a(a_in_1), .b(comp_b1), .carry_in(c_s0), .add(res_sub1), .carry_out(c_s1));
 adder_1bit u_sub2 (.a(a_in_2), .b(comp_b2), .carry_in(c_s1), .add(res_sub2), .carry_out(c_s2));
 adder_1bit u_sub3 (.a(a_in_3), .b(comp_b3), .carry_in(c_s2), .add(res_sub3), .carry_out(c_s3));
-
+    
     //------------------------- PIB (111) -------------------------
     
     //---------------------------- MUX ----------------------------
-    module mux8_1 (
-    input  logic       d0,  // Data input 0 (selected when sel == 3'b000)
-    input  logic       d1,  // Data input 1 (selected when sel == 3'b001)
-    input  logic       d2,  // Data input 2 (selected when sel == 3'b010)
-    input  logic       d3,  // Data input 3 (selected when sel == 3'b011)
-    input  logic       d4,  // Data input 4 (selected when sel == 3'b100)
-    input  logic       d5,  // Data input 5 (selected when sel == 3'b101)
-    input  logic       d6,  // Data input 6 (selected when sel == 3'b110)
-    input  logic       d7,  // Data input 7 (selected when sel == 3'b111)
-    input  logic       sel_0, // 3-bit Select signal
-    input  logic       sel_1, // 3-bit Select signal
-    input  logic       sel_2, // 3-bit Select signal
-    output logic       y    // Output y
-    );
-    
-    always_comb begin
-        case ({sel_2,sel_1,sel_0})
-            3'b000:  y = d0;
-            3'b001:  y = d1;
-            3'b010:  y = d2;
-            3'b011:  y = d3;
-            3'b100:  y = d4;
-            3'b101:  y = d5;
-            3'b110:  y = d6;
-            3'b111:  y = d7;
-            default: y = 'x; // Assign 'x' for unknown select value
-        endcase
-    end
-endmodule
-
-    module mux8_2 (
-    input  logic       d0,  // Data input 0 (selected when sel == 3'b000)
-    input  logic       d1,  // Data input 1 (selected when sel == 3'b001)
-    input  logic       d2,  // Data input 2 (selected when sel == 3'b010)
-    input  logic       d3,  // Data input 3 (selected when sel == 3'b011)
-    input  logic       d4,  // Data input 4 (selected when sel == 3'b100)
-    input  logic       d5,  // Data input 5 (selected when sel == 3'b101)
-    input  logic       d6,  // Data input 6 (selected when sel == 3'b110)
-    input  logic       d7,  // Data input 7 (selected when sel == 3'b111)
-    input  logic       sel_0, // 3-bit Select signal
-    input  logic       sel_1, // 3-bit Select signal
-    input  logic       sel_2, // 3-bit Select signal
-    output logic       y    // Output y
-    );
-    
-    always_comb begin
-        case ({sel_2,sel_1,sel_0})
-            3'b000:  y = d0;
-            3'b001:  y = d1;
-            3'b010:  y = d2;
-            3'b011:  y = d3;
-            3'b100:  y = d4;
-            3'b101:  y = d5;
-            3'b110:  y = d6;
-            3'b111:  y = d7;
-            default: y = 'x; // Assign 'x' for unknown select value
-        endcase
-    end
-endmodule
-    
-    
+   
     //--------------------------- FLAGS ---------------------------
     
     
