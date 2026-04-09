@@ -119,7 +119,7 @@ module alu(
     );
 
     //------------------------- PIB (111) -------------------------
-    
+    // Logramos resolver este apartado desde el multiplexor con una asignacion directa.
     //---------------------------- MUX ----------------------------
     mux8_1 alu_mux_0 (
         .d0(ca0),    // Resultado AND bit 0
