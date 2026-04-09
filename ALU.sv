@@ -30,23 +30,25 @@ module alu(
 `timescale 1ns / 1ps
 
 module adder_1bit_0(
-    input a,
-    input b,
-    input carry_in,
-    output add,
-    output carry_out
+    input a_in_0,
+    input b_in_0,
+    input carry_in_0,
+    output s0,
+    output carry_out_0
     );
 
     wire s0;
     wire c0,c1;
 
-    xor(s0, a,b);
-    and(c0,a,b);
-    
-    xor(add,s0,carry_in);
-    and(c1,s0,carry_in);
+    xor(s0, a_in_0,b_in_0);
+    and(c0,a_in_0,b_in_0);
 
-    or(carry_out,c0,c1);
+    assign carry_in_0 = 0;
+    
+    xor(s1,s0,carry_in_0);
+    and(c1,s0,carry_in_0);
+
+    or(carry_out_0,c0,c1);
     
    
     
