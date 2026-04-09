@@ -24,14 +24,13 @@ module alu(
        
     //------------------------- AND (000) -------------------------
     logic ca0, ca1, ca2, ca3;
-    logic and0, and1, and2, and3;
     
     and_gate y0 (.a(a_in_0), .b(b_in_0), .y(ca0));
     and_gate y1 (.a(a_in_1), .b(b_in_1), .y(ca1));
     and_gate y2 (.a(a_in_2), .b(b_in_2), .y(ca2));
     and_gate y3 (.a(a_in_3), .b(b_in_3), .y(ca3));
         
-    );
+
     
     
     //------------------------- OR  (001) -------------------------
