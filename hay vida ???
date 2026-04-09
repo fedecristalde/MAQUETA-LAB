@@ -1,1 +1,26 @@
 
+//-----------------------------------------------------------------------------
+// FLAGS MODULE
+//-----------------------------------------------------------------------------
+module flags (
+    input  logic [3:0] result,       // Resultado de la ALU
+    input  logic carry_add,          // Carry de la suma
+    input  logic carry_sub,          // Carry de la resta
+    input  logic [2:0] alu_op,       // Operación seleccionada
+    output logic zero_flag,          // Flag de cero
+    output logic carry_flag          // Flag de carry
+);
+
+    // ZERO FLAG → 1 si resultado = 0
+    assign zero_flag = ~(result[0] | result[1] | result[2] | result[3]);
+
+    // CARRY FLAG depende de la operación
+    always_comb begin
+        case (alu_op)
+            3'b010: carry_flag = carry_add; // ADD
+            3'b110: carry_flag = carry_sub; // SUB
+            default: carry_flag = 1'b0;
+        endcase
+    end
+
+endmodule
