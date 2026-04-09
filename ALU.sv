@@ -18,17 +18,18 @@ module alu(
     output alu_result_3,
     output zero_flag,
     output carry_flag
-    );
+);
     
 
        
     //------------------------- AND (000) -------------------------
     
+    
     //------------------------- OR  (001) -------------------------
     
     //------------------------- ADD (010) -------------------------
-logic c0, c1, c2; // Acarreos intermedios
-logic sum0, sum1, sum2, sum3; // Resultados temporales de la suma
+logic c0, c1, c2; 
+logic sum0, sum1, sum2, sum3; 
 
 adder_1bit bit0 (
     .a(a_in_0), 
@@ -65,8 +66,8 @@ adder_1bit bit3 (
     
     //------------------------- SUB (110) -------------------------
     
-logic c0, c1, c2; // Acarreos intermedios
-logic sum0, sum1, sum2, sum3; // Resultados temporales de la suma
+logic c0, c1, c2; 
+logic sum0, sum1, sum2, sum3; 
 logic nb0, nb1, nb2, nb3; 
 
 not_gate u_not0 (.a(b_in_0), .y(nb0));
@@ -77,7 +78,7 @@ not_gate u_not3 (.a(b_in_3), .y(nb3));
 adder_1bit bit0 (
     .a(a_in_0), 
     .b(nb0), 
-    .carry_in(1'b1), //acarreo inicial es 1
+    .carry_in(1'b1), //acarreo inicial es 1 (el bit que debo sumar para el c2)
     .add(sum0), 
     .carry_out(c0)
 );
