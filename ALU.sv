@@ -70,17 +70,11 @@ logic sum0, sum1, sum2, sum3; // Resultados temporales de la suma
 logic nb0, nb1, nb2, nb3; 
 
 
-    not_gate u_not0 (.a(b_in_0), .y(nb0));
-    not_gate u_not1 .y(nb2));
-    not_gate u_not3 (.a(b_in_3), .y(nb3));
-
-    logic c0, c1, c2; // Acarreos intermedios
-logic sum0, sum1, sum2, sum3; // Resultados temporales de la suma
-
+    
 adder_1bit bit0 (
     .a(a_in_0), 
     .b(b_in_0), 
-    .carry_in(1'b0), //acarreo inicial es 0
+    .carry_in(1'b1), //acarreo inicial es 1
     .add(sum0), 
     .carry_out(c0)
 );
