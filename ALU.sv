@@ -133,7 +133,8 @@ module alu(
         .sel_0(alu_op_0), 
         .sel_1(alu_op_1), 
         .sel_2(alu_op_2),
-        .y(alu_result_0)  // Salida final del bit 0);
+        .y(alu_result_0) 
+    );
 
     mux8_1 alu_mux_1 (
         .d0(ca1),    // Resultado AND bit 0
@@ -147,7 +148,9 @@ module alu(
         .sel_0(alu_op_0), 
         .sel_1(alu_op_1), 
         .sel_2(alu_op_2),
-        .y(alu_result_1)  // Salida final del bit 0);
+        .y(alu_result_1)
+    );
+    
 
     mux8_1 alu_mux_2 (
         .d0(ca2),    // Resultado AND bit 0
@@ -161,7 +164,8 @@ module alu(
         .sel_0(alu_op_0), 
         .sel_1(alu_op_1), 
         .sel_2(alu_op_2),
-        .y(alu_result_2)  // Salida final del bit 0);
+        .y(alu_result_2) 
+    );
     
     mux8_1 alu_mux_3 (
         .d0(ca3),    // Resultado AND bit 0
@@ -175,7 +179,8 @@ module alu(
         .sel_0(alu_op_0), 
         .sel_1(alu_op_1), 
         .sel_2(alu_op_2),
-        .y(alu_result_3)  // Salida final del bit 0);
+        .y(alu_result_3) 
+    );
     //--------------------------- FLAGS ---------------------------
     
     
